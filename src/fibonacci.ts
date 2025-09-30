@@ -15,3 +15,29 @@ export function fibWithForLoop(): number[] {
     
     return seq
 }
+
+
+export function fibWithRecursion() {
+
+    let count = 0;
+    const seq: number[] = [0,1];
+
+    function fib(prev1: number, prev2: number): void {
+        
+        let newFibo: number;
+
+        if (count < 19) {
+            newFibo = prev1 + prev2;
+            seq.push(newFibo);
+            prev2 = prev1;
+            prev1= newFibo;
+            count++;
+            fib(prev1, prev2);
+        } else {
+            return;
+        }
+    }
+    fib(1,0)
+    return seq;
+    
+}
