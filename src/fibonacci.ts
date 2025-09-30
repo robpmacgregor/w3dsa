@@ -12,18 +12,14 @@ export function fibWithForLoop(): number[] {
         prev2 = prev1;
         prev1 = newFibo;
     }
-    
     return seq
 }
 
-
 export function fibWithRecursion() {
-
     let count = 0;
     const seq: number[] = [0,1];
 
     function fib(prev1: number, prev2: number): void {
-        
         let newFibo: number;
 
         if (count < 19) {
@@ -39,5 +35,12 @@ export function fibWithRecursion() {
     }
     fib(1,0)
     return seq;
-    
+}
+
+export function findNthFibNumber(nth: number): number {
+    if (nth <= 1 ) {
+        return nth;
+    } else {
+        return findNthFibNumber(nth -1) + findNthFibNumber(nth -2);
+    }
 }
