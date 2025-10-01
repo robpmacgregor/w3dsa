@@ -17,7 +17,6 @@ export function selectionSortWithShift(arr: number[]): number[] {
 
 export function selectionSortWithSwap(arr: number[]): number[] {
     let minIndex: number;
-    let minVal: number;
 
     for (let i = 0; i < arr.length; i++) {
         minIndex = i;
