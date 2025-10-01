@@ -21,7 +21,6 @@ export function radixSort(arr: number[]): number[] {
                     arr.push(val);
                 }
             }
-
         }
         exp *= 10;
     }
