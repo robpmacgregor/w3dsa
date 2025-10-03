@@ -1,49 +1,53 @@
-import { LinkedNode, findLowestValue, deleteNode } from './linkedList';
+import { LinkedNode, findLowestValue, deleteNode, insertNode } from './linkedList';
 
-test("LinkedList works correctly", () => {
-    const node1: LinkedNode<number> = new LinkedNode<number>(3);
-    const node2: LinkedNode<number> = new LinkedNode<number>(5);
-    const node3: LinkedNode<number> = new LinkedNode<number>(13);
-    const node4: LinkedNode<number> = new LinkedNode<number>(2);
-
-    node1.setNext(node2);
-    node2.setNext(node3);
-    node3.setNext(node4);
-
-    expect(node1.getValue()).toBe(3);
-    expect(node1.getNext()?.getValue()).toBe(5);
-    expect(node1.getNext()?.getNext()?.getValue()).toBe(13);
-    expect(node1.getNext()?.getNext()?.getNext()?.getValue()).toBe(2);
-    expect(node1.getNext()?.getNext()?.getNext()?.getNext()?.getValue()).toBe(undefined);
-
+describe("LinkedList works correctly", () => {
+    let headNode: LinkedNode<number>;
     
-});
+    beforeEach(() => {
+        headNode = new LinkedNode<number>(3);
+        headNode
+            .setNext(new LinkedNode<number>(5))
+            .setNext(new LinkedNode<number>(13))
+            .setNext(new LinkedNode<number>(2));
+    });
 
-test("find the lowest value in a linked list", () => {
-    const node1: LinkedNode<number> = new LinkedNode<number>(3);
-    const node2: LinkedNode<number> = new LinkedNode<number>(5);
-    const node3: LinkedNode<number> = new LinkedNode<number>(13);
-    const node4: LinkedNode<number> = new LinkedNode<number>(2);
+    test("LinkedList can be traversed and each value can be accessed", () => {
+        expect(headNode.getValue()).toBe(3);
+        expect(headNode.getNext()?.getValue()).toBe(5);
+        expect(headNode.getNext()?.getNext()?.getValue()).toBe(13);
+        expect(headNode.getNext()?.getNext()?.getNext()?.getValue()).toBe(2);
+        expect(headNode.getNext()?.getNext()?.getNext()?.getNext()?.getValue()).toBe(undefined);    
+    });
 
-    node1.setNext(node2);
-    node2.setNext(node3);
-    node3.setNext(node4);
+    test("find the lowest value in a linked list", () => {
+        expect(findLowestValue(headNode)).toBe(2);
+    });
 
-    expect(findLowestValue(node1)).toBe(2);
+    test("delete specific node from linkedList", () => {
+        const nodeToDelete: LinkedNode<number> = headNode.getNext()?.getNext() as LinkedNode<number>;
+        headNode = deleteNode(headNode, nodeToDelete); 
 
-});
+        expect(headNode.getNext()?.getNext()?.getValue()).toEqual(2);
+    });
 
-test("delete specific node from linkedList", () => {
-    const node1: LinkedNode<number> = new LinkedNode<number>(3);
-    const node2: LinkedNode<number> = new LinkedNode<number>(5);
-    const node3: LinkedNode<number> = new LinkedNode<number>(13);
-    const node4: LinkedNode<number> = new LinkedNode<number>(2);
+    test("delete head node from linkedList", () => {
+        headNode = deleteNode(headNode, headNode); 
 
-    node1.setNext(node2);
-    node2.setNext(node3);
-    node3.setNext(node4);
+        expect(headNode.getValue()).toBe(5);
+    });
 
-    deleteNode(node1, node3); 
+    test("insert newNode at position", () => {
+        const newNode: LinkedNode<number> = new LinkedNode<number>(7)
+        headNode = insertNode(headNode, newNode, 2); 
 
-    expect(node2.getNext()).toEqual(node4);
+        expect(headNode.getNext()?.getValue()).toBe(7);
+    });
+
+    test("insert new head node", () => {
+        const newNode: LinkedNode<number> = new LinkedNode<number>(7)
+        
+        expect(headNode.getValue()).toBe(3);  
+        headNode = insertNode(headNode, newNode, 1); 
+        expect(headNode.getValue()).toBe(7);
+    });
 });
