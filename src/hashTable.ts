@@ -1,8 +1,4 @@
-export function hashFunction(value: string): number {
-    let sum: number = 0;
-    Array.from(value).forEach(ch => sum += ch.charCodeAt(0));
-    return sum % 10;
-}
+import { hashFunction } from './hashFunction';
 
 export class HashTable<T> {
     private table: T[][];
