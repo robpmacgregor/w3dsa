@@ -29,3 +29,30 @@ export class TreeNode<T> {
         return this.right;
     }
 }
+
+export function preOrderTraversal<T>(node: TreeNode<T> | undefined, fn: (value: T) => void): void {
+    if (typeof node === "undefined") {
+        return;
+    }
+    fn(node.getValue());
+    preOrderTraversal<T>(node.getLeft(), fn);
+    preOrderTraversal<T>(node.getRight(), fn);
+}
+
+export function inOrderTraversal<T>(node: TreeNode<T> | undefined, fn: (value: T) => void): void {
+    if (typeof node === "undefined") {
+        return;
+    }
+    inOrderTraversal<T>(node.getLeft(), fn);
+    fn(node.getValue());
+    inOrderTraversal<T>(node.getRight(), fn);
+}
+
+export function postOrderTraversal<T>(node: TreeNode<T> | undefined, fn: (value: T) => void): void {
+    if (typeof node === "undefined") {
+        return;
+    }
+    postOrderTraversal<T>(node.getLeft(), fn);
+    postOrderTraversal<T>(node.getRight(), fn);
+    fn(node.getValue());
+}
