@@ -1,5 +1,6 @@
 export function hashFunction(value: string): number {
-    let sum: number = 0;
-    Array.from(value).forEach(ch => sum += ch.charCodeAt(0));
-    return sum % 10;
+    return Array
+    .from(value)
+    .map(ch => ch.charCodeAt(0))
+    .reduce((acc, next) => acc + next, 0) % 10;
 }
