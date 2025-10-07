@@ -1,7 +1,7 @@
 export class TreeNode<T> {
     private value: T;
-    private left: TreeNode<T> | undefined = undefined;
-    private right: TreeNode<T> | undefined = undefined;
+    private left: TreeNode<T>|undefined = undefined;
+    private right: TreeNode<T>|undefined = undefined;
 
     constructor(value: T) {
         this.value = value;
@@ -11,26 +11,31 @@ export class TreeNode<T> {
         return this.value;
     }
 
-    setLeft(node: TreeNode<T>): TreeNode<T> {
+    setValue(value: T): TreeNode<T>|undefined {
+        this.value = value;
+        return this;
+    }
+
+    setLeft(node: TreeNode<T>|undefined): TreeNode<T>|undefined {
         this.left = node;
         return this.left;
     }
 
-    setRight(node: TreeNode<T>): TreeNode<T> {
+    setRight(node: TreeNode<T>|undefined): TreeNode<T>|undefined {
         this.right = node;
         return this.right;
     }
 
-    getLeft(): TreeNode<T> | undefined{
+    getLeft(): TreeNode<T>|undefined{
         return this.left;
     }
 
-    getRight(): TreeNode<T> | undefined{
+    getRight(): TreeNode<T>|undefined{
         return this.right;
     }
 }
 
-export function preOrderTraversal<T>(node: TreeNode<T> | undefined, fn: (value: T) => void): void {
+export function preOrderTraversal<T>(node: TreeNode<T>|undefined, fn: (value: T) => void): void {
     if (typeof node === "undefined") {
         return;
     }
@@ -39,7 +44,7 @@ export function preOrderTraversal<T>(node: TreeNode<T> | undefined, fn: (value: 
     preOrderTraversal<T>(node.getRight(), fn);
 }
 
-export function inOrderTraversal<T>(node: TreeNode<T> | undefined, fn: (value: T) => void): void {
+export function inOrderTraversal<T>(node: TreeNode<T>|undefined, fn: (value: T) => void): void {
     if (typeof node === "undefined") {
         return;
     }
@@ -48,7 +53,7 @@ export function inOrderTraversal<T>(node: TreeNode<T> | undefined, fn: (value: T
     inOrderTraversal<T>(node.getRight(), fn);
 }
 
-export function postOrderTraversal<T>(node: TreeNode<T> | undefined, fn: (value: T) => void): void {
+export function postOrderTraversal<T>(node: TreeNode<T>|undefined, fn: (value: T) => void): void {
     if (typeof node === "undefined") {
         return;
     }
