@@ -22,6 +22,5 @@ export function countingSort(arr: number[]): number[] {
             count[i]--;
         } 
     }
-    console.log(arr);
     return arr;
 }
