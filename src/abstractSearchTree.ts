@@ -23,6 +23,8 @@ export abstract class AbstractSearchTree<T, N extends TreeNode<T, N>> {
     }
 
     abstract insertNode(node: N | undefined, data: N): N ;
+        
+    abstract deleteNode(node: N | undefined, data: N): N | undefined;
 
     traverse(traversalType: TraversalType, fn: (node: N | undefined) => void): void {
         switch (traversalType) {
@@ -52,44 +54,22 @@ export abstract class AbstractSearchTree<T, N extends TreeNode<T, N>> {
     }
 
     lowestValue(): N | undefined{
-        return this.#lowestValueNode(this.root)
+        return (typeof(this.root) !== "undefined") ? this.lowestValueNode(this.root) : undefined;
     }
 
-    #lowestValueNode(node: N | undefined): N | undefined {
-        while(typeof(node?.getLeft()) !== "undefined") {
-            node = node.getLeft();
+    lowestValueNode(node: N ): N {
+        while(typeof(node.getLeft()) !== "undefined") {
+            node = node.getLeft() as N;
         }
         return node;
     }
 
     delete(value: T): void {
-        this.#deleteNode(this.root, value);
-    }
-
-    #deleteNode(node: N | undefined, value: T): N | undefined {
-        if (typeof(node) === "undefined") {
-            return;
+        let node: N | undefined = undefined;
+        this.traverse(TraversalType.InOrder, n => {if (typeof(n) !== "undefined" && n.getValue() === value){node = n}})
+        if (typeof(node) !== "undefined") {
+            this.deleteNode(this.root, node);
         }
-
-        if (value < node.getValue()) {
-            node.setLeft(this.#deleteNode(node.getLeft(), value));
-        } else if (value > node.getValue()) {
-            node.setRight(this.#deleteNode(node.getRight(), value));
-        } else {
-            if (typeof(node.getLeft()) === "undefined") {
-                const temp = node.getRight();
-                node = undefined;
-                return temp;
-            } else if (typeof(node.getRight()) === "undefined") {
-                const temp = node.getLeft();
-                node = undefined;
-                return temp;                
-            }
-            const lowestValue = this.#lowestValueNode(node.getRight()) as BasicNode<T>;
-            node.setValue(lowestValue.getValue());
-            node.setRight(this.#deleteNode(node.getRight(), node.getValue()));
-        }
-        return node;
     }
 }
 

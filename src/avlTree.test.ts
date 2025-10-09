@@ -35,4 +35,29 @@ describe("AVL Tree works correctly", () => {
         expect(tree.getBalance("A")).toBe(0);
         expect(tree.getBalance("C")).toBe(0);
     });
+
+    test("Tree is correctly rebalanced after node is deleted", () => {
+        const tree: AVLTree<string> = new AVLTree();
+
+        tree.insert("C");
+        tree.insert("B");
+        tree.insert("E");
+        tree.insert("A");
+        tree.insert("D");
+        tree.insert("G"); 
+ 
+        const root = tree.getRoot() as AVLTreeNode<string>;
+
+        expect(root.getValue()).toBe("C");
+        expect(root.getRight()?.getValue()).toBe("E");      
+        expect(root.getRight()?.getLeft()?.getValue()).toBe("D");       
+        expect(root.getRight()?.getRight()?.getValue()).toBe("G");       
+
+        tree.delete("E");
+
+        expect(root.getRight()?.getValue()).toBe("G");      
+        expect(root.getRight()?.getLeft()?.getValue()).toBe("D");  
+
+
+    });
 });

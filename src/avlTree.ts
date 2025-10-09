@@ -35,12 +35,46 @@ export class AVLTree<T> extends AbstractSearchTree<T, AVLTreeNode<T>> {
             node.setRight(this.insertNode(node.getRight(), data));
         }
 
+        return this.#rebalanceTree(node);
+    }
+
+    override deleteNode(node: AVLTreeNode<T> | undefined, data: AVLTreeNode<T>): AVLTreeNode<T> | undefined {
+        if (typeof(node) === "undefined") {
+            return data;
+        }
+
+        if (data.getValue() < node.getValue()) {
+            node.setLeft(this.deleteNode(node.getLeft(), data));
+        } else if (data.getValue() > node.getValue()) {
+            node.setRight(this.deleteNode(node.getRight(), data));  
+        } else {
+            if (typeof(node.getLeft()) === "undefined") {
+                const temp = node.getRight();
+                node = undefined;
+                return temp;
+            } else if (typeof(node.getRight()) === "undefined") {
+                const temp = node.getLeft();
+                node = undefined;
+                return temp;
+            } else {
+                const temp =  this.lowestValueNode(node.getRight() as AVLTreeNode<T>);
+                node.setValue(temp.getValue()); 
+                node.setRight(this.deleteNode(node.getRight(), temp));
+            }
+        }
+
+        return this.#rebalanceTree(node);
+    }
+
+    #rebalanceTree(node: AVLTreeNode<T>): AVLTreeNode<T> {
+
         node.setHeight(
             1 + Math.max(
                 node.getLeft()?.getHeight() ?? 0,
                 node.getRight()?.getHeight() ?? 0
             )
         );
+
         const balance = this.getBalance(node) ?? 0;
 
         if (balance > 1 && this.getBalance(node.getLeft()) >= 0) {
@@ -102,14 +136,14 @@ export class AVLTree<T> extends AbstractSearchTree<T, AVLTreeNode<T>> {
         x.setLeft(temp);
         x.setHeight(
             1 + Math.max(
-                (x.getLeft() as AVLTreeNode<T>).getHeight(),
-                (x.getRight() as AVLTreeNode<T>).getHeight()
+                x.getLeft()?.getHeight() ?? 0,
+                x.getRight()?.getHeight() ?? 0
             )
         );
         y.setHeight(
             1 + Math.max(
-                (y.getLeft() as AVLTreeNode<T>).getHeight(),
-                (y.getRight() as AVLTreeNode<T>).getHeight()
+                y.getLeft()?.getHeight() ?? 0,
+                y.getRight()?.getHeight() ?? 0
             )
         );
         return y;
