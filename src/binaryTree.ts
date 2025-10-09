@@ -11,26 +11,25 @@ export class TreeNode<T, N extends TreeNode<T, N>> {
         return this.value;
     }
 
-    setValue(value: T): TreeNode<T, N> | undefined {
+    setValue(value: T): void {
         this.value = value;
-        return this;
     }
 
-    setLeft(node: N | undefined): TreeNode<T, N> | undefined {
+    setLeft(node: N | undefined): N | undefined {
         this.left = node;
         return this.left;
     }
 
-    setRight(node: N | undefined): TreeNode<T, N> | undefined {
+    setRight(node: N | undefined): N | undefined {
         this.right = node;
         return this.right;
     }
 
-    getLeft(): TreeNode<T, N> | undefined{
+    getLeft(): N | undefined{
         return this.left;
     }
 
-    getRight(): TreeNode<T, N> | undefined{
+    getRight(): N | undefined{
         return this.right;
     }
 }

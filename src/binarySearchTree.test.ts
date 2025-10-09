@@ -1,4 +1,5 @@
-import { BinarySearchTree, TraversalType } from "./binarySearchTree";
+import { TraversalType } from "./abstractSearchTree";
+import { BinarySearchTree } from "./binarySearchTree";
 import { BasicNode, TreeNode } from "./binaryTree";
 
 describe("Binary Search Tree works correctly", () => {
