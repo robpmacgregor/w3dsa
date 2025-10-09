@@ -1,8 +1,8 @@
 import { BinarySearchTree, TraversalType } from "./binarySearchTree";
-import { TreeNode } from "./binaryTree";
+import { BasicNode, TreeNode } from "./binaryTree";
 
 describe("Binary Search Tree works correctly", () => {
-    let tree: BinarySearchTree;
+    let tree: BinarySearchTree<number>;
 
     beforeEach(() => {
         tree = new BinarySearchTree();
@@ -17,7 +17,7 @@ describe("Binary Search Tree works correctly", () => {
     });
 
     test("child elements added to the root node are added lowest to the left and highest to the right", () => {
-        const root = tree.getRoot() as TreeNode<number>;
+        const root = tree.getRoot() as BasicNode<number>;
         expect(root.getValue()).toBe(13)
         expect(root.getLeft()?.getValue()).toBe(7)
         expect(root.getRight()?.getValue()).toBe(15)
@@ -30,7 +30,7 @@ describe("Binary Search Tree works correctly", () => {
         const expected = [3, 7, 8, 13, 14, 15, 18, 19];
         tree.traverse(
             TraversalType.InOrder, 
-            (node: TreeNode<number>|undefined) => 
+            (node: BasicNode<number>|undefined) => 
                 arr.push((typeof(node) === "undefined") ? undefined : node.getValue())
         );
 
@@ -38,7 +38,7 @@ describe("Binary Search Tree works correctly", () => {
     });
 
     test("Find lowest value in search tree", () => {
-        const lowestValue: TreeNode<number>|undefined = tree.lowestValue();
+        const lowestValue: BasicNode<number>|undefined = tree.lowestValue();
         const expected = 3;
  
         expect(lowestValue?.getValue()).toBe(expected);
@@ -47,7 +47,7 @@ describe("Binary Search Tree works correctly", () => {
     test("Delete node with no child nodes successfully removes node from tree", () => {
         tree.delete(3);
 
-        const root = tree.getRoot() as TreeNode<number>;
+        const root = tree.getRoot() as BasicNode<number>;
 
         expect(root.getValue()).toBe(13);
         expect(root.getLeft()?.getValue()).toBe(7);
@@ -59,7 +59,7 @@ describe("Binary Search Tree works correctly", () => {
         tree.delete(3);
         tree.delete(7);
         
-        const root = tree.getRoot() as TreeNode<number>;
+        const root = tree.getRoot() as BasicNode<number>;
 
         expect(root.getValue()).toBe(13);
         expect(root.getLeft()?.getValue()).toBe(8);
@@ -68,7 +68,7 @@ describe("Binary Search Tree works correctly", () => {
     test("Delete node with two child nodes successfully removes node from tree and links child nodes to relevant successors", () => {
         tree.delete(15);
 
-        const root = tree.getRoot() as TreeNode<number>;
+        const root = tree.getRoot() as BasicNode<number>;
 
         expect(root.getValue()).toBe(13);
         expect(root.getRight()?.getValue()).toBe(18);

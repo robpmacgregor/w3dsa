@@ -1,15 +1,15 @@
-import { TreeNode } from "./binaryTree";
+import { BasicNode } from "./binaryTree";
 
-export class BinarySearchTree {
-    private root: TreeNode<number> | undefined;
+export class BinarySearchTree<T> {
+    private root: BasicNode<T>|undefined;
 
-    getRoot(): TreeNode<number> | undefined {
+    getRoot(): BasicNode<T>|undefined {
         return this.root;
     }
 
-    insert(value: number| TreeNode<number>): void {
-        if (typeof(value) === "number") {
-            value = new TreeNode(value);
+    insert(value: T|BasicNode<T>): void {
+        if (!(value instanceof BasicNode)) {
+            value = new BasicNode(value);
         }
 
         if (typeof(this.root) === "undefined") {
@@ -20,7 +20,7 @@ export class BinarySearchTree {
         this.#insertNode(this.getRoot(), value);
     }
 
-    #insertNode(node: TreeNode<number> | undefined, data: TreeNode<number>): TreeNode<number> {
+    #insertNode(node: BasicNode<T> | undefined, data: BasicNode<T>): BasicNode<T> {
         if (typeof(node) === "undefined") {
             return data;
         }
@@ -32,7 +32,7 @@ export class BinarySearchTree {
         }
         return node;
     }
-    traverse(traversalType: TraversalType, fn: (node: TreeNode<number>|undefined) => void): void {
+    traverse(traversalType: TraversalType, fn: (node: BasicNode<T>|undefined) => void): void {
         switch (traversalType) {
             case TraversalType.PreOrder:
                 
@@ -46,7 +46,7 @@ export class BinarySearchTree {
         }
     } 
 
-    #inOrderTraversal(node: TreeNode<number>|undefined, fn: (node: TreeNode<number>|undefined) => void) {
+    #inOrderTraversal(node: BasicNode<T>|undefined, fn: (node: BasicNode<T>|undefined) => void) {
         if (typeof(node) === "undefined") {
             return;
         }
@@ -55,22 +55,22 @@ export class BinarySearchTree {
         this.#inOrderTraversal(node?.getRight(), fn);
     }
 
-    lowestValue(): TreeNode<number>|undefined{
+    lowestValue(): BasicNode<T>|undefined{
         return this.#lowestValueNode(this.root)
     }
 
-    #lowestValueNode(node: TreeNode<number> | undefined): TreeNode<number> | undefined {
+    #lowestValueNode(node: BasicNode<T> | undefined): BasicNode<T> | undefined {
         while(typeof(node?.getLeft()) !== "undefined") {
             node = node.getLeft();
         }
         return node;
     }
 
-    delete(value: number): void {
+    delete(value: T): void {
         this.#deleteNode(this.root, value);
     }
 
-    #deleteNode(node: TreeNode<number> | undefined, value: number): TreeNode<number>|undefined {
+    #deleteNode(node: BasicNode<T> | undefined, value: T): BasicNode<T>|undefined {
         if (typeof(node) === "undefined") {
             return;
         }
@@ -89,7 +89,7 @@ export class BinarySearchTree {
                 node = undefined;
                 return temp;                
             }
-            const lowestValue = this.#lowestValueNode(node.getRight()) as TreeNode<number>;
+            const lowestValue = this.#lowestValueNode(node.getRight()) as BasicNode<T>;
             node.setValue(lowestValue.getValue());
             node.setRight(this.#deleteNode(node.getRight(), node.getValue()));
         }

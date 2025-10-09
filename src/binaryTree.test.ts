@@ -1,18 +1,18 @@
-import { TreeNode, preOrderTraversal, inOrderTraversal, postOrderTraversal } from './binaryTree';
+import { BasicNode, preOrderTraversal, inOrderTraversal, postOrderTraversal } from './binaryTree';
 
 describe("Binary Tree works correctly", () => {
-    let root: TreeNode<string>;
+    let root: BasicNode<string>;
 
     beforeEach(() => {
-        root = new TreeNode("R");
+        root = new BasicNode("R");
 
-        const nodeA: TreeNode<string> = new TreeNode<string>("A");
-        const nodeB: TreeNode<string> = new TreeNode<string>("B");
-        const nodeC: TreeNode<string> = new TreeNode<string>("C");
-        const nodeD: TreeNode<string> = new TreeNode<string>("D");
-        const nodeE: TreeNode<string> = new TreeNode<string>("E");
-        const nodeF: TreeNode<string> = new TreeNode<string>("F");
-        const nodeG: TreeNode<string> = new TreeNode<string>("G");
+        const nodeA: BasicNode<string> = new BasicNode("A");
+        const nodeB: BasicNode<string> = new BasicNode<string>("B");
+        const nodeC: BasicNode<string> = new BasicNode<string>("C");
+        const nodeD: BasicNode<string> = new BasicNode<string>("D");
+        const nodeE: BasicNode<string> = new BasicNode<string>("E");
+        const nodeF: BasicNode<string> = new BasicNode<string>("F");
+        const nodeG: BasicNode<string> = new BasicNode<string>("G");
     
         root.setLeft(nodeA);
         root.setRight(nodeB);
@@ -32,7 +32,7 @@ describe("Binary Tree works correctly", () => {
 
     test("Pre-order traversal traverses the tree in the correct order", () => {
         const arr: string[] = [];
-        preOrderTraversal<string>(root, (value: string) => arr.push(value));
+        preOrderTraversal<string, BasicNode<string>>(root, (value: string) => arr.push(value));
         
         expect(arr[0]).toBe("R");
         expect(arr[1]).toBe("A");
@@ -46,7 +46,7 @@ describe("Binary Tree works correctly", () => {
 
     test("In-order traversal traverses the tree in the correct order", () => {
         const arr: string[] = [];
-        inOrderTraversal<string>(root, (value: string) => arr.push(value));
+        inOrderTraversal<string, BasicNode<string>>(root, (value: string) => arr.push(value));
         
         expect(arr[0]).toBe("C");
         expect(arr[1]).toBe("A");
@@ -60,7 +60,7 @@ describe("Binary Tree works correctly", () => {
 
     test("Post-order traversal traverses the tree in the correct order", () => {
         const arr: string[] = [];
-        postOrderTraversal<string>(root, (value: string) => arr.push(value));
+        postOrderTraversal<string, BasicNode<string>>(root, (value: string) => arr.push(value));
         
         expect(arr[0]).toBe("C");
         expect(arr[1]).toBe("D");
