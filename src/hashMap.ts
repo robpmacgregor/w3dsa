@@ -36,7 +36,7 @@ export class HashMap<K, V> {
             this.hashMap[hash] = [entry];
             return;
         } else {
-            for (let el of this.hashMap[hash]) {
+            for (const el of this.hashMap[hash]) {
                 if (el.getKey() === entry.getKey()) {
                     el.setValue(entry.getValue());
                     return;
@@ -50,7 +50,7 @@ export class HashMap<K, V> {
     get(key: K): Entry<K, V> | undefined {
         const hash = hashFunction(key as string);
         if (typeof this.hashMap[hash] !== "undefined") {
-            for (let el of this.hashMap[hash]) {
+            for (const el of this.hashMap[hash]) {
                 if (el.getKey() === key) {
                     return el;
                 }

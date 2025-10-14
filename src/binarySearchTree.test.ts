@@ -1,6 +1,6 @@
 import { TraversalType } from "./abstractSearchTree";
 import { BinarySearchTree } from "./binarySearchTree";
-import { BasicNode, TreeNode } from "./binaryTree";
+import { BasicNode } from "./binaryTree";
 
 describe("Binary Search Tree works correctly", () => {
     let tree: BinarySearchTree<number>;
