@@ -1,4 +1,4 @@
-import { Graph, GraphType } from './graph'
+import { CycleDetection, Graph, GraphType } from './graph'
 
 describe("Undirected graph works correctly", () => {
     let g: Graph;
@@ -110,5 +110,55 @@ describe("Directed Graph works correctly", () => {
         const arr: string[] = [];
         g.bfs("D", (vertex: string) => arr.push(vertex));
         expect(arr).toStrictEqual(expected);
+    });
+});
+
+describe("Cyclic graphs can be proven", () => {
+
+    test("isCyclic check returns true for undirected cyclic graph", () => {
+        const g = new Graph(7, GraphType.UNDIRECTED);
+    
+        g.addVertex(0, 'A');
+        g.addVertex(1, 'B');
+        g.addVertex(2, 'C');
+        g.addVertex(3, 'D');
+        g.addVertex(4, 'E');
+        g.addVertex(5, 'F');
+        g.addVertex(6, 'G');
+
+        g.addEdge(3, 0);
+        g.addEdge(0, 2);
+        g.addEdge(0, 3);
+        g.addEdge(0, 4);
+        g.addEdge(4, 2);
+        g.addEdge(2, 5);
+        g.addEdge(2, 1);
+        g.addEdge(2, 6);
+        g.addEdge(1, 5);
+
+        expect(g.isCyclic()).toBe(true);
+    });
+
+    test("union find isCyclic check returns true for undirected cyclic graph", () => {
+        const g = new Graph(7, GraphType.DIRECTED, CycleDetection.UNIONFIND);
+    
+        g.addVertex(0, 'A');
+        g.addVertex(1, 'B');
+        g.addVertex(2, 'C');
+        g.addVertex(3, 'D');
+        g.addVertex(4, 'E');
+        g.addVertex(5, 'F');
+        g.addVertex(6, 'G');
+
+        g.addEdge(1, 0);
+        g.addEdge(0, 3);
+        g.addEdge(0, 2);
+        g.addEdge(2, 3);
+        g.addEdge(3, 4);
+        g.addEdge(3, 5);
+        g.addEdge(3, 6);
+        g.addEdge(4, 5);
+
+        expect(g.isCyclic()).toBe(true);
     });
 });
