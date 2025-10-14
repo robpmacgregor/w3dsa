@@ -40,10 +40,11 @@ export class AdjacencyGraph {
         }       
     }
     
-    shortestPathFrom(start: string): number[] {
+    shortestPathFrom(start: string): number[][] {
         const startIndex = this.vertices.indexOf(start);
         const visited = new Array(this.size).fill(false);
         const distances: number[] = new Array(this.size).fill(undefined);
+        const predecessors: number[] = new Array(this.size).fill(undefined);
         distances[startIndex] = 0;
 
         for (let i = 0; i < this.size; i++) {
@@ -74,11 +75,27 @@ export class AdjacencyGraph {
                     
                     if (typeof(distances[v]) === "undefined" || alt < distances[v]) {
                         distances[v] = alt;
+                        predecessors[v] = u;
                     }
                 }
             }
         }
 
-        return distances;
+        return [distances, predecessors];
+    }
+
+    getPath(predecessors: number[], startVertex: string, endVertex: string): string[] {
+        const path: string[] = []
+        let current: number | undefined = this.vertices.indexOf(endVertex);
+
+        while(typeof(current) !== "undefined") {
+            path.unshift(this.vertices[current]);
+            current = predecessors[current];
+            if (current === this.vertices.indexOf(startVertex)) {
+                path.unshift(startVertex);
+                break;
+            }
+        }
+        return path; 
     }
 }
