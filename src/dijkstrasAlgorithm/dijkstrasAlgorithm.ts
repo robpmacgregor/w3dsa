@@ -1,7 +1,9 @@
+import { GraphType } from "../graph";
+
 export class AdjacencyGraph {
     private vertices: string[];
     private matrix: number[][] = [];
-    constructor(private size: number){
+    constructor(private size: number, private graphType: GraphType = GraphType.UNDIRECTED){
         this.vertices = Array(size).fill('');
         this.buildMatrix();
     }
@@ -32,8 +34,10 @@ export class AdjacencyGraph {
         if(this.matrix[u] === undefined) {
             throw new Error(`addEdge failed because index ${u} is out of bounds`);
         }
-        this.matrix[u][w] = weight;           
-        this.matrix[w][u] = weight;           
+        this.matrix[u][w] = weight;    
+        if (this.graphType === GraphType.UNDIRECTED) {
+            this.matrix[w][u] = weight;           
+        }       
     }
     
     shortestPathFrom(start: string): number[] {

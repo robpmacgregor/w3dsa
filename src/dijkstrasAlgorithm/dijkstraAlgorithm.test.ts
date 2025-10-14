@@ -1,3 +1,4 @@
+import { GraphType } from "../graph";
 import { AdjacencyGraph } from "./dijkstrasAlgorithm";
 
 describe("Dijkstras Algorithm correctly calculates the shortest path", () => {
@@ -71,7 +72,7 @@ describe("Dijkstras Algorithm correctly calculates the shortest path", () => {
         expect(distances).toStrictEqual([0, 2, 2, 5, 6, 8, 9]);
     });
 
-    test("shortestPathFrom A returns the distance of the shortest path from A to all other vertices", () => {
+    test("shortestPathFrom C returns the distance of the shortest path from C to all other vertices", () => {
         graph.addEdge(0, 1, 2);
         graph.addEdge(0, 2, 2);
         graph.addEdge(2, 3, 3);
@@ -85,3 +86,32 @@ describe("Dijkstras Algorithm correctly calculates the shortest path", () => {
         expect(distances).toStrictEqual([2, 4, 0, 3, 4, 6, 7]);
     });
 });
+
+describe("Dijkstras algorithm with directed graph", () => {
+    test("Vertex B is unreachable in  a directed graph", () => {
+        const g = new AdjacencyGraph(7, GraphType.DIRECTED);
+
+        g.addVertex(0, "A");
+        g.addVertex(1, "B");
+        g.addVertex(2, "C");
+        g.addVertex(3, "D");
+        g.addVertex(4, "E");
+        g.addVertex(5, "F");
+        g.addVertex(6, "G");
+
+        g.addEdge(3, 0, 4);
+        g.addEdge(3, 4, 2);
+        g.addEdge(0, 2, 3);
+        g.addEdge(0, 4, 4);
+        g.addEdge(4, 2, 4);
+        g.addEdge(4, 6, 5);
+        g.addEdge(2, 5, 5);
+        g.addEdge(1, 2, 2);
+        g.addEdge(1, 5, 2);
+        g.addEdge(6, 5, 5);
+
+         const distances = g.shortestPathFrom("D");
+
+        expect(distances).toStrictEqual([4, undefined, 6, 0, 2, 11, 7]);
+    })
+})
