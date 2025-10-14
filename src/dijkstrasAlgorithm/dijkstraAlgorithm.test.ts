@@ -43,7 +43,6 @@ describe("Dijkstras Algorithm correctly calculates the shortest path", () => {
         graph.addEdge(4, 5, 1);
         graph.addEdge(5, 6, 1);
         graph.addEdge(3, 6, 4);
-        
 
         expect(graph.getMatrix()).toStrictEqual(
                     [
@@ -72,7 +71,7 @@ describe("Dijkstras Algorithm correctly calculates the shortest path", () => {
         expect(distances).toStrictEqual([0, 2, 2, 5, 6, 8, 9]);
     });
 
-        test("shortestPathFrom A returns the distance of the shortest path from A to all other vertices", () => {
+    test("shortestPathFrom A returns the distance of the shortest path from A to all other vertices", () => {
         graph.addEdge(0, 1, 2);
         graph.addEdge(0, 2, 2);
         graph.addEdge(2, 3, 3);
