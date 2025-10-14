@@ -20,7 +20,7 @@ export class HashTable<T> {
     contains(value: T): boolean {
         const hash = hashFunction(value as string);
         if (typeof this.table[hash] !== "undefined") {
-            for (let el of this.table[hash]) {
+            for (const el of this.table[hash]) {
                 if (el === value) {
                     return true;
                 }

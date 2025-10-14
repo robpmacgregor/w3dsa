@@ -24,7 +24,7 @@ export class HashSet<T> {
     contains(value: T): boolean {
         const hash = hashFunction(value as string);
         if (typeof this.hashSet[hash] !== "undefined") {
-            for (let el of this.hashSet[hash]) {
+            for (const el of this.hashSet[hash]) {
                 if (el === value) {
                     return true;
                 }

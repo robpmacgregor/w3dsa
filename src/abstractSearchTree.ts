@@ -1,4 +1,4 @@
-import { BasicNode, TreeNode } from "./binaryTree";
+import { TreeNode } from "./binaryTree";
 
 export abstract class AbstractSearchTree<T, N extends TreeNode<T, N>> {
     private root: N | undefined;
