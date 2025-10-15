@@ -1,4 +1,6 @@
-import { CycleDetection, Graph, GraphType } from './graph'
+import { Graph } from './graph'
+import { CycleDetection } from './cycleDetection';
+import { GraphType } from './graphType';
 
 describe("Undirected graph works correctly", () => {
     let g: Graph;

@@ -1,12 +1,14 @@
-import { GraphType } from "../graph";
-import { AdjacencyGraph } from "./dijkstrasAlgorithm";
+import { GraphType } from '../graphType';
+import { Graph } from "./graph";
+import { shortestPathFrom, getPath } from './dijkstrasAlgorithm';
+import { EdgeType } from '../edgeType';
 
 describe("Dijkstras Algorithm correctly calculates the shortest path", () => {
 
-    let graph: AdjacencyGraph;
+    let graph: Graph;
 
     beforeEach(() => {
-        graph = new AdjacencyGraph(7);
+        graph = new Graph(7, GraphType.UNDIRECTED, EdgeType.WEIGHTED);
     
         graph.addVertex(0, "A");
         graph.addVertex(1, "B");
@@ -19,7 +21,7 @@ describe("Dijkstras Algorithm correctly calculates the shortest path", () => {
 
     test("Vertices can be added to the Graph", () => {
 
-        expect(graph.getVertices()).toStrictEqual(["A", "B", "C", "D", "E", "F", "G"]);
+        expect(graph.getVertexData()).toStrictEqual(["A", "B", "C", "D", "E", "F", "G"]);
     });
 
     test("GetMatrix returns properly constructed Adjacency matrix", () => {
@@ -67,7 +69,7 @@ describe("Dijkstras Algorithm correctly calculates the shortest path", () => {
         graph.addEdge(4, 5, 2);
         graph.addEdge(5, 6, 1);
 
-        const [distances,] = graph.shortestPathFrom("A");
+        const [distances,] = shortestPathFrom(graph, "A");
 
         expect(distances).toStrictEqual([0, 2, 2, 5, 6, 8, 9]);
     });
@@ -81,7 +83,7 @@ describe("Dijkstras Algorithm correctly calculates the shortest path", () => {
         graph.addEdge(4, 5, 2);
         graph.addEdge(5, 6, 1);
 
-        const [distances,] = graph.shortestPathFrom("C");
+        const [distances,] = shortestPathFrom(graph, "C");
 
         expect(distances).toStrictEqual([2, 4, 0, 3, 4, 6, 7]);
     });
@@ -89,69 +91,69 @@ describe("Dijkstras Algorithm correctly calculates the shortest path", () => {
 
 describe("Dijkstras algorithm with directed graph", () => {
     test("Vertex B is unreachable in  a directed graph", () => {
-        const g = new AdjacencyGraph(7, GraphType.DIRECTED);
+        const graph = new Graph(7, GraphType.DIRECTED, EdgeType.WEIGHTED);
 
-        g.addVertex(0, "A");
-        g.addVertex(1, "B");
-        g.addVertex(2, "C");
-        g.addVertex(3, "D");
-        g.addVertex(4, "E");
-        g.addVertex(5, "F");
-        g.addVertex(6, "G");
+        graph.addVertex(0, "A");
+        graph.addVertex(1, "B");
+        graph.addVertex(2, "C");
+        graph.addVertex(3, "D");
+        graph.addVertex(4, "E");
+        graph.addVertex(5, "F");
+        graph.addVertex(6, "G");
 
-        g.addEdge(3, 0, 4);
-        g.addEdge(3, 4, 2);
-        g.addEdge(0, 2, 3);
-        g.addEdge(0, 4, 4);
-        g.addEdge(4, 2, 4);
-        g.addEdge(4, 6, 5);
-        g.addEdge(2, 5, 5);
-        g.addEdge(1, 2, 2);
-        g.addEdge(1, 5, 2);
-        g.addEdge(6, 5, 5);
+        graph.addEdge(3, 0, 4);
+        graph.addEdge(3, 4, 2);
+        graph.addEdge(0, 2, 3);
+        graph.addEdge(0, 4, 4);
+        graph.addEdge(4, 2, 4);
+        graph.addEdge(4, 6, 5);
+        graph.addEdge(2, 5, 5);
+        graph.addEdge(1, 2, 2);
+        graph.addEdge(1, 5, 2);
+        graph.addEdge(6, 5, 5);
 
-        const [distances,] = g.shortestPathFrom("D");
+        const [distances,] = shortestPathFrom(graph, "D");
 
         expect(distances).toStrictEqual([4, undefined, 6, 0, 2, 11, 7]);
     })
 })
 
 describe("Dijksras Algorithm returns actual shortest path", () => {
-    let g: AdjacencyGraph;
+    let graph: Graph;
 
     beforeEach(() => {
-        g = new AdjacencyGraph(7);
+        graph = new Graph(7, GraphType.UNDIRECTED, EdgeType.WEIGHTED);
     
-        g.addVertex(0, "A");
-        g.addVertex(1, "B");
-        g.addVertex(2, "C");
-        g.addVertex(3, "D");
-        g.addVertex(4, "E");
-        g.addVertex(5, "F");
-        g.addVertex(6, "G");
+        graph.addVertex(0, "A");
+        graph.addVertex(1, "B");
+        graph.addVertex(2, "C");
+        graph.addVertex(3, "D");
+        graph.addVertex(4, "E");
+        graph.addVertex(5, "F");
+        graph.addVertex(6, "G");
     
-        g.addEdge(3, 0, 4);
-        g.addEdge(3, 4, 2);
-        g.addEdge(0, 2, 3);
-        g.addEdge(0, 4, 4);
-        g.addEdge(4, 2, 4);
-        g.addEdge(4, 6, 5);
-        g.addEdge(2, 5, 5);
-        g.addEdge(2, 1, 2);
-        g.addEdge(1, 5, 2);
-        g.addEdge(6, 5, 5);
+        graph.addEdge(3, 0, 4);
+        graph.addEdge(3, 4, 2);
+        graph.addEdge(0, 2, 3);
+        graph.addEdge(0, 4, 4);
+        graph.addEdge(4, 2, 4);
+        graph.addEdge(4, 6, 5);
+        graph.addEdge(2, 5, 5);
+        graph.addEdge(2, 1, 2);
+        graph.addEdge(1, 5, 2);
+        graph.addEdge(6, 5, 5);
     });
 
     test("shortestPathFrom returns distances and predecessors", () => {
-        const [distances, predecessors] = g.shortestPathFrom("D");
+        const [distances, predecessors] = shortestPathFrom(graph, "D");
 
         expect(distances).toStrictEqual([4, 8, 6, 0, 2, 10, 7]);
         expect(predecessors).toStrictEqual([3, 2, 4, undefined, 3, 1, 4]);
     });
 
     test("getPath returns an array of vertices representing the shorrtest path from the starting vertex to any given vertex", () => {
-        const [, predecessors] = g.shortestPathFrom("D");
-        const shortestPath = g.getPath(predecessors, "D", "F")
+        const [, predecessors] = shortestPathFrom(graph, "D");
+        const shortestPath = getPath(graph, predecessors, "D", "F")
 
         expect(shortestPath).toStrictEqual(["D", "E", "C", "B", "F"]);
     });
