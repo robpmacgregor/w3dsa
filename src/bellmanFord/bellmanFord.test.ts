@@ -41,7 +41,21 @@ describe("Bellman Ford Algorithm works correctly", () => {
 
         expect(negativeCycle).toBe(true);
         expect(distances).toBeUndefined();
-        
+    });
 
+    test("Algorithm returns the vertices in the shortest path if no negative cycles found", () => {
+         const [negativeCycle,,predecessors] = bellmanFord(graph, "D");
+
+        expect(negativeCycle).toBe(false);
+        expect(predecessors).toStrictEqual([2, 4, 1, undefined, 3]);       
+    });
+
+    test("Algorithm does not return shortest path if negative cycles are found", () => {
+         graph.addEdge(2, 0, -9);
+
+        const [negativeCycle,,predecessors] = bellmanFord(graph, "D");
+
+        expect(negativeCycle).toBe(true);
+        expect(predecessors).toBeUndefined();       
     });
 });
