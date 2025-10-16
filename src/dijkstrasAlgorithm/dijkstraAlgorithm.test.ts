@@ -1,5 +1,5 @@
 import { GraphType } from '../graphType';
-import { Graph } from "./graph";
+import { Graph } from "../graph";
 import { shortestPathFrom, getPath } from './dijkstrasAlgorithm';
 import { EdgeType } from '../edgeType';
 

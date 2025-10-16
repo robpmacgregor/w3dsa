@@ -1,4 +1,4 @@
-import { Graph } from './graph'
+import { Graph } from './basicGraph'
 import { CycleDetection } from './cycleDetection';
 import { GraphType } from './graphType';
 

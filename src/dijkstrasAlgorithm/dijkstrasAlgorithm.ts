@@ -1,4 +1,4 @@
-import { Graph } from "./graph";
+import { Graph } from "../graph";
 
 export function shortestPathFrom(graph: Graph, start: string): number[][] {
     const startIndex = graph.getVertexData().indexOf(start);
